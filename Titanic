@@ -1,0 +1,27 @@
+import pandas as pd
+df = pd.read_csv('C:\\Users\\Atif\\Desktop\\python learning\\Tree_titanic.csv')
+df.head()
+df.drop(['PassengerId','Name','SibSp','Parch','Ticket','Cabin','Embarked'],axis='columns',inplace=True)
+df.head()
+target=df.Survived
+inputs = df.drop(['Survived'],axis='columns')
+dummies = pd.get_dummies(inputs.Sex)
+dummies.head()
+inputs = pd.concat([inputs,dummies],axis='columns')
+inputs.head()
+inputs.drop(['Sex'],axis='columns',inplace=True)
+inputs.head()
+inputs.columns[inputs.isna().any()]
+#this show in data which columns have nan value then clean the data
+inputs.Age = inputs.Age.fillna(inputs.Age.mean())
+inputs.head(7)
+from sklearn.model_selection import cross_val_score
+from sklearn.naive_bayes import GaussianNB
+clf = GaussianNB()
+score = cross_val_score(clf,inputs,target,cv=3)
+score
+#this how to use cross val score to fit and predict the model
+clf.fit(inputs,target)
+#this is done just to cross check the score of cross val score 
+clf.predict([[3,22.00,7.2500,0,1]])
+clf.predict([[1,38,71,1,0]])
