@@ -1,0 +1,38 @@
+from sklearn.datasets import load_digits
+digits = load_digits()
+import pandas as pd
+dir(digits)
+digits.target_names
+df = pd.DataFrame(digits.data,columns=digits.feature_names)
+df.head(6)
+len(digits.data)
+df['target'] = digits.target
+df
+import matplotlib.pyplot as plt
+%matplotlib inline
+df0 = df[df.target==0]
+df1 = df[df.target==1]
+df2 = df[df.target==2]
+df3 = df[df.target==3]
+df4 = df[df.target==4]
+df5 = df[df.target==5]
+df6 = df[df.target==6]
+df7 = df[df.target==7]
+df8 = df[df.target==8]
+df0.head()
+plt.xlabel('pixel_0_0')
+plt.ylabel('pixel_0_3')
+plt.scatter(df0['pixel_0_5'],df0['pixel_1_1'],color='blue',marker='+')
+plt.scatter(df1['pixel_0_0'],df1['pixel_0_3'],color='green',marker='.')
+from sklearn.model_selection import train_test_split
+X = df.drop(['target'],axis='columns')
+X.head()
+Y = df.target
+X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.2)
+from sklearn.svm import SVC
+reg = SVC()
+reg.fit(X_train,Y_train)
+reg.score(X_test,Y_test)
+reg_model = SVC(kernel='linear')
+reg_model.fit(X_train,Y_train)
+reg_model.score(X_test,Y_test)
