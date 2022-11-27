@@ -1,0 +1,247 @@
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <iomanip>
+
+using namespace std;
+
+class Customer
+{
+    public :
+        char name[20];
+        char add[50];
+        char email[50];
+        long mobile;
+        int age;
+        char sex;
+        char departure[25];
+        char arrival[25];
+        char date[10];
+        
+        int sNo;
+    public :
+        int getInfo()
+        {
+            cout << "Enter Passenger's Name :- ";
+            cin.get();
+            cin.getline(name,20);
+
+            cout << "Enter the Address Details :- ";
+            cin.getline(add,50);
+
+            cout << "Enter your email address :- ";
+            cin.getline(email,50);
+
+            cout << "Enter your Phone Number :- ";
+            cin >> mobile;
+
+            cout << "Enter your Age :- ";
+            cin >> age;
+
+            cout <<"Enter Sex(M/F) :- ";
+            cin >> sex;
+
+            
+
+            int n;
+            int k = 0;
+            do
+            {
+                cout << "\n\t\tSelect Your City of Departure\n";
+                cout << "\t\t-----------------------------\n";
+		        cout << "\t1. Islambad\n";
+		        cout << "\t2. Multan\n";
+		        cout << "\t3. Karachi\n";
+		        cout << "\t4. Peshwar\n";
+		        cout << "\t5. Lahore\n";
+		        cout << "\t6. Quetta\n";
+
+		        cout << "Please Input Your Choice Number :-  ";
+                cin >> n;
+		        switch (n)
+                {
+                    case 1:
+                        strcpy(departure, "Islamabd");
+                        break;
+                    case 2:
+                        strcpy(departure, "Multan");
+                        break;
+                    case 3:
+                        strcpy(departure, "Karachi");
+                        break;
+                    case 4:
+                        strcpy(departure, "Pesahwar");
+                        break;
+                    case 5:
+                        strcpy(departure, "Lahore");
+                        break;
+                    case 6:
+                        strcpy(departure, "Quetta");
+                        break;
+                    default:
+                        cout << "Invalid Choice . Please Try Again.\n";
+                        k++;
+		        }
+            }while(k != 0);
+
+            int p = 0;
+            do
+            {
+                cout << "\n\t\tSelect Your City of Arrival\n";
+                cout << "\t\t---------------------------\n";
+                cout << "\t1. Lahore\n";
+                cout << "\t2. Quetta\n";
+                cout << "\t3. Islamabad\n";
+                cout << "\t4. pesahwar\n";
+                cout << "\t5. Multan\n";
+                cout << "\t6. Karachi\n";
+
+                cout << "Please Input Your Choice :- ";
+                cin >>n;
+
+                switch(n)
+                {
+                    case 1:
+                        strcpy(arrival,"Lahore");
+                        break;
+                    case 2:
+                        strcpy(arrival,"Quetta");
+                        break;
+                    case 3:
+                        strcpy(arrival,"Islamabad");
+                        break;
+                    case 4:
+                        strcpy(arrival,"Peshawar");
+                        break;
+                    case 5:
+                        strcpy(arrival,"Multan");
+                        break;
+                    case 6:
+                        strcpy(arrival,"Karachi");
+                        break;
+                   default:
+                        cout << "Invalid choice . Please Try Again.\n";
+                        p++;
+                }
+            }while(p != 0);
+
+            cout << "Date of Journey ( DD/MM/YYYY ) :- ";
+            cin >> date;
+        }
+
+        int disInfo()
+        {
+            sNo += 1;
+            cout.setf(ios::left);
+            cout <<setw(8)<<sNo<<setw(15)<< name <<setw(12)<< date <<setw(20)<< add <<setw(15)<< mobile <<setw(30)<<email<<setw(20)<<setw(12)<< departure <<setw(12)<< arrival<<endl;
+        }
+
+};
+class FLIGHTS
+{
+    char flight_no[10];
+    char flight_carrier[20];
+    char time_depart[10];
+    char time_arrival[10];
+
+    public :
+        int flightInfo()
+        {
+            cout << "Enter the Flight Number :- ";
+            cin >>flight_no;
+
+            cout << "Enter the Flight Carrier Name :- ";
+            cin >> flight_carrier;
+
+            cout << "Enter the departure time :- ";
+            cin >> time_depart;
+
+            cout << "Enter the arrival time :- ";
+            cin >> time_arrival;
+        }
+};
+
+int main()
+{
+start :
+    cout << "*********************************************************************\n";
+    cout <<"..............Welcome to the Phenomenal Airline Services ............\n";
+    cout << "*********************************************************************\n";
+    int k = 0;
+    int choice;
+    do
+    {
+        cout << "\tHit the Option of your Choice\n";
+        cout << "--------------------------------------------------------------------\n";
+        cout << "\t1. Customer\t\t2. Flight Details\n";
+        cout << "\t3. Booking Instrcution\t\t4. Package\n";
+        cout << "\t5. Bank\t\t6. Reservation\n";
+
+        cout << "Please Enter your Preferred Choice :- ";
+        cin >> choice;
+        if(choice<1 || choice >6)
+        {
+            cout << "\nInvalid Choice . Please Try Again .\n";
+            k++;
+        }
+    }while (k != 0);
+
+    switch (choice)
+    {
+        case 1:
+            {
+                Customer b;
+                fstream f1;
+                char ch;
+                int book_id = 1;
+                f1.open("booking.dat",ios::in|ios::out|ios::app|ios::binary);
+                cout << "\t\tWelcome to Booking Services\n";
+                cout << "\t\t---------------------------\n";
+
+                do
+                {
+                    b.getInfo();
+                    f1.write((char *)&b , sizeof(b));
+
+                    cout << "\n\t\tBooking Details are following\n";
+                    cout << "\t\t-----------------------------\n";
+                    cout.setf(ios::left);
+                    cout <<setw(8)<<"S.No."<<setw(15)<<"Name"<<setw(12)<<"Date"<<setw(20)<<"Address"<<setw(15)<<"Mobile"<<setw(30)<<"Email"<<setw(20)<<"Aadhar"<<setw(12)<<"Depart."<<setw(12)<<"Arrival"<<endl;
+                    cout <<setw(8)<<"-----"<<setw(15)<<"----"<<setw(12)<<"----"<<setw(20)<<"-------"<<setw(15)<<"------"<<setw(30)<<"-----"<<setw(20)<<"------"<<setw(12)<<"-------"<<setw(12)<<"-------"<<endl;
+                    b.disInfo();
+                    cout << "\nDo you want to register again ?\n";
+                    cout << "(Y for yes,N for no)";
+                    cin >> ch;
+                }while (ch == 'Y'|| ch == 'y');
+                cout << "\n\t..........Booking Successful...............\n";
+
+                char c1;
+                cout << "\tPress 'q' to terminate or any other key to return to HomeScreen :- ";
+                cin >>c1;
+                if(c1 == 'q' || c1 == 'Q')
+                    exit(EXIT_FAILURE);
+                else
+                    goto start;
+                f1.close();
+            }
+            break;
+
+          case 2:
+            {
+                FLIGHTS f;
+                fstream f2;
+                f2.open("flights.dat",ios::in|ios::out|ios::app);
+                char ch = 'Y';
+                while (ch == 'Y'||ch == 'y')
+                  {
+                      f.flightInfo();
+                      f2.write((char *)&f,sizeof(f));
+                      cout << "Do you want to add more Flights in the list(y/n) :- ";
+                      cin >> ch;
+                  }
+            }
+
+        
+    }
+}
